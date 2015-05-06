@@ -15,13 +15,15 @@ void SetMemoryLimit(const int64_t limit_mb){
 */
 
 int main(){
-	FILE *textoA, *Resultado;
+	FILE *textoA;
+	FILE *Resultado;
 	int Xbase, Ybase;
 	int AlternarArquivo;
 	int megabytes;
 	
-	fscanf(stdin, "%d", &megabytes);
-	fscanf(stdin, "%d %d", &Xbase, &Ybase);
+	fscanf(stdin, "%d\n", &megabytes);
+	fscanf(stdin, "%d", &Xbase);
+	fscanf(stdin, " %d\n", &Ybase);
 	
 	textoA = fopen("A.txt", "w");
 	

@@ -13,14 +13,15 @@ void Decodifica(FILE *texto){
 	i = 0;
 	cont = 0;
 	
-	while(fscanf(stdin, "%c", &mensagem) && !feof(stdin)){
+	while(scanf("%c", &mensagem) != EOF){
 
 	 	// Primeira fase
 		terminarFase = 0;
 		
 		if(feof(stdin)){
 		        terminarFase = 1;
-   		        return;
+		        fclose(texto);
+			return;
            		}
 
 		sequencia = 0;
@@ -80,10 +81,12 @@ void Decodifica(FILE *texto){
 		                fclose(texto);
 		                return;
 		        }
+		       
 			
 			if(!feof(stdin)){
 			        scanf("%c", &mensagem);
 			}
+			
 			
 			if(feof(stdin)){ 
 		                terminarFase = 1;
@@ -96,7 +99,7 @@ void Decodifica(FILE *texto){
 		
 	// Pre segunda fase
 		
-		if(mensagem != '('){
+		if(mensagem != '(' && scanf("%c", &mensagem) != EOF){
 			while(mensagem != '(' && !feof(stdin)){
 				scanf("%c", &mensagem);
 				
@@ -119,11 +122,7 @@ void Decodifica(FILE *texto){
 		
 	// achando a 1a coordenada	
 		
-		while(mensagem != ',' && terminarFase == 0 && !feof(stdin)){
-			
-			if(!feof(stdin)){
-			        scanf("%c", &mensagem);
-			}
+		while(mensagem != ',' && terminarFase == 0 && scanf("%c", &mensagem) != EOF){
 			
 			if(feof(stdin)){
 			        terminarFase = 1;
@@ -163,11 +162,7 @@ void Decodifica(FILE *texto){
 		primeiracoord = 1;
 		
 		if(terminarFase == 0){
-			while(mensagem != ')' && terminarFase == 0 && !feof(stdin)){
-				
-				if(!feof(stdin)){
-			                scanf("%c", &mensagem);
-			        }
+			while(mensagem != ')' && terminarFase == 0 && scanf("%c", &mensagem) != EOF){
 				
 				if(feof(stdin)){
 					terminarFase = 1;
@@ -287,7 +282,7 @@ void OrdenaPontos(FILE *textoA, FILE *saida, int Xbase, int Ybase, int *alternar
 		fclose(textoB);
 		
 		if(Max.tanques != -1){
-			fprintf(saida, "%d;(%d,%d)", Max.tanques, Max.CoordenadaX, Max.CoordenadaY);
+			//fprintf(saida, "%d;(%d,%d)", Max.tanques, Max.CoordenadaX, Max.CoordenadaY);
 			printf("%d;(%d,%d)\n", Max.tanques, Max.CoordenadaX, Max.CoordenadaY);
 		}
 		
