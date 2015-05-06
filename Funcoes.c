@@ -17,11 +17,16 @@ void Decodifica(FILE *texto){
 
 	 	// Primeira fase
 		terminarFase = 0;
+		
+		if(feof(stdin)){
+		        terminarFase = 1;
+   		        return;
+           		}
 
 		sequencia = 0;
 		Ntanques = 0;
 		
-		while(sequencia < 3 && !feof(stdin)){
+		while(sequencia <= 3 && !feof(stdin)){
 			
 			switch(sequencia){
 				case 0:
@@ -70,9 +75,23 @@ void Decodifica(FILE *texto){
 					
 			}
 			
-			scanf("%c", &mensagem);
+			if(feof(stdin)){ 
+		                terminarFase = 1;
+		                fclose(texto);
+		                return;
+		        }
+			
+			if(!feof(stdin)){
+			        scanf("%c", &mensagem);
+			}
+			
+			if(feof(stdin)){ 
+		                terminarFase = 1;
+		                fclose(texto);
+		                return;
+		        }
 		}
-		if(feof(stdin)) terminarFase = 1;
+		
 		
 		
 	// Pre segunda fase
@@ -81,6 +100,10 @@ void Decodifica(FILE *texto){
 			while(mensagem != '(' && !feof(stdin)){
 				scanf("%c", &mensagem);
 				
+				if(feof(stdin)){
+			                terminarFase = 1;
+           		                return;
+           		        }
 			}
 		}
 		
@@ -97,10 +120,15 @@ void Decodifica(FILE *texto){
 	// achando a 1a coordenada	
 		
 		while(mensagem != ',' && terminarFase == 0 && !feof(stdin)){
-			scanf("%c", &mensagem);
 			
-			if(feof(stdin))
-           		break;
+			if(!feof(stdin)){
+			        scanf("%c", &mensagem);
+			}
+			
+			if(feof(stdin)){
+			        terminarFase = 1;
+           		        return;
+           		}
 			
 			if(mensagem == '(' || mensagem == ')'){
 				terminarFase = 1;
@@ -136,11 +164,14 @@ void Decodifica(FILE *texto){
 		
 		if(terminarFase == 0){
 			while(mensagem != ')' && terminarFase == 0 && !feof(stdin)){
-				scanf("%c", &mensagem);
+				
+				if(!feof(stdin)){
+			                scanf("%c", &mensagem);
+			        }
 				
 				if(feof(stdin)){
 					terminarFase = 1;
-           			break;					
+           			        return;					
 				}
 					
 				if(mensagem == ',' || mensagem == '('){
@@ -186,6 +217,7 @@ void Decodifica(FILE *texto){
 	}
 	
 	fclose(texto);
+	return;
 }
 
 
