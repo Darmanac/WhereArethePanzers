@@ -13,22 +13,15 @@ void Decodifica(FILE *texto){
 	i = 0;
 	cont = 0;
 	
-	while(!feof(stdin)){
-//	while(cont < 8){
-		
-		fscanf(stdin, "%c", &mensagem);
-		
-		if(feof(stdin))
-           break;
-	 
-	 
+	while(fscanf(stdin, "%c", &mensagem) && !feof(stdin)){
+
 	 	// Primeira fase
-	 
-		
+		terminarFase = 0;
+
 		sequencia = 0;
 		Ntanques = 0;
 		
-		while(sequencia < 3){
+		while(sequencia < 3 && !feof(stdin)){
 			
 			switch(sequencia){
 				case 0:
@@ -79,20 +72,18 @@ void Decodifica(FILE *texto){
 			
 			scanf("%c", &mensagem);
 		}
+		if(feof(stdin)) terminarFase = 1;
 		
 		
 	// Pre segunda fase
 		
 		if(mensagem != '('){
-			while(mensagem != '('){
+			while(mensagem != '(' && !feof(stdin)){
 				scanf("%c", &mensagem);
 				
-				if(feof(stdin))
-           			break;
 			}
 		}
 		
-		terminarFase = 0;
 		
 		for(i = 0; i < 5;i++){
 			coordA[i] = '\0';
@@ -105,7 +96,7 @@ void Decodifica(FILE *texto){
 		
 	// achando a 1a coordenada	
 		
-		while(mensagem != ',' && terminarFase == 0){
+		while(mensagem != ',' && terminarFase == 0 && !feof(stdin)){
 			scanf("%c", &mensagem);
 			
 			if(feof(stdin))
@@ -144,11 +135,13 @@ void Decodifica(FILE *texto){
 		primeiracoord = 1;
 		
 		if(terminarFase == 0){
-			while(mensagem != ')' && terminarFase == 0){
+			while(mensagem != ')' && terminarFase == 0 && !feof(stdin)){
 				scanf("%c", &mensagem);
 				
-				if(feof(stdin))
-           			break;
+				if(feof(stdin)){
+					terminarFase = 1;
+           			break;					
+				}
 					
 				if(mensagem == ',' || mensagem == '('){
 					terminarFase = 1;
